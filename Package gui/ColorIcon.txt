@@ -1,0 +1,79 @@
+/*
+ * TCSS 305 – Winter 2015
+ * Assignment 5 - Power Paint
+ */
+
+package gui;
+
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Graphics;
+
+import javax.swing.Icon;
+
+/**
+ * Represents a ColorIcon class.
+ * @author Lola Howell
+ * @version February 25, 2015
+ */
+
+public class ColorIcon implements Icon {
+    /**
+     * The height of the ColorIcon.
+     */
+    private static int HEIGHT = 14;  
+
+    /**
+     * The width of the ColorIcon.
+     */
+    private static int WIDTH = 14;  
+
+    /**
+     * The color of the ColorIcon.
+     */
+    private Color myColor;  
+
+    /**
+     * The constructor for ColorIcon, instantiates color.
+     * 
+     * @param theColor color of the ColorIcon.
+     */
+    public ColorIcon(final Color theColor) {  
+        myColor = theColor;  
+    } 
+
+    /**
+     * Returns the Icon height.
+     * 
+     * @return the height.
+     */
+    public int getIconHeight() {  
+        return HEIGHT;  
+    }  
+
+    /**
+     * Returns the Icon width.
+     * 
+     * @return the width.
+     */
+    public int getIconWidth() {  
+        return WIDTH;  
+    } 
+
+    /**
+     * The constructor for ColorIcon, instantiates color.
+     * 
+     * @param theC the Component.
+     * @param theG the Graphics.
+     * @param theX the X integer.
+     * @param theY the Y integer.
+     */
+    public void paintIcon(final Component theC, final Graphics theG, 
+                          final int theX, final int theY) {  
+        theG.setColor(myColor);  
+        theG.fillRect(theX, theY, WIDTH - 1, HEIGHT - 1);  
+
+        theG.setColor(Color.black);  
+        theG.drawRect(theX, theY, WIDTH - 1, HEIGHT - 1);  
+    }  
+}  

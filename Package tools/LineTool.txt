@@ -1,0 +1,63 @@
+/*
+ * TCSS 305 – Winter 2015
+ * Assignment 3 - Easy Street
+ */
+
+package tools;
+
+import java.awt.Shape;
+import java.awt.geom.Line2D;
+import java.awt.geom.RectangularShape;
+
+/**
+ * Represents a LineTool class.
+ * @author Lola Howell
+ * @version February 25, 2015
+ */
+public class LineTool extends AbstractTool {
+
+    /**
+     * The Line2D.
+     */
+    private Line2D myLine;
+
+    /**
+     * The starting x coordinate.
+     */
+    private int myStartX;
+
+    /**
+     * The starting y coordinate.
+     */
+    private int myStartY;
+
+    /**
+     * Constructor for the LineTool.
+     */
+    public LineTool() {
+        super();
+        myStartX = 0;
+        myStartY = 0;
+        myLine = new Line2D.Double(-10.0, -10.0, -10.0, -10.0);
+    }
+
+    /* 
+     * @see tools.ToolInterface#start(int, int)
+     */
+    @Override
+    public Shape start(final int theX, final int theY) {
+        myStartX = theX;
+        myStartY = theY;
+        myLine.setLine(myStartX, myStartY, myStartX, myStartY);
+        return myLine;
+    }
+
+    /* 
+     * @see tools.ToolInterface#move(int, int)
+     */
+    @Override
+    public Shape move(final int theNewX, final int theNewY) {
+        myLine.setLine(myStartX, myStartY, theNewX, theNewY);
+        return (Shape) myLine.clone();
+    }
+}

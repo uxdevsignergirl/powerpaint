@@ -1,0 +1,63 @@
+/*
+ * TCSS 305 – Winter 2015
+ * Assignment 3 - Easy Street
+ */
+package tools;
+
+import java.awt.Shape;
+import java.awt.geom.RectangularShape;
+
+/**
+ * Represents a AbstractRectangularShape class.
+ * @author Lola Howell
+ * @version February 25, 2015
+ */
+public abstract class AbstractRectangularShape extends AbstractTool {
+    /**
+     * The shape.
+     */
+    private RectangularShape myShape;
+
+    /**
+     * The x value of the bound box corner.
+     */
+    private int myStartX;
+
+    /**
+     * The y value of the bound box corner.
+     */
+    private int myStartY;
+
+    /**
+     * Constructor for Rectangular Shapes.
+     * @param theShape rectangular shape.
+     */
+    public AbstractRectangularShape(final RectangularShape theShape) {
+        super();
+        myShape = theShape;
+    }
+
+    /* 
+     * @see tools.ToolInterface#start(int, int)
+     */
+    @Override
+    public Shape start(final int theX, final int theY) {
+        myStartX = theX;
+        myStartY = theY;
+        myShape = (RectangularShape) myShape.clone();
+        myShape.setFrameFromDiagonal(myStartX, myStartY,
+                                     theX, theY);
+        return myShape;
+    }
+
+    /* 
+     * @see tools.ToolInterface#move(int, int)
+     */
+    @Override
+    public Shape move(final int theX, final int theY) {
+        myShape.setFrameFromDiagonal(myStartX, myStartY,
+                                     theX, theY);
+        return myShape;
+    }
+}
+

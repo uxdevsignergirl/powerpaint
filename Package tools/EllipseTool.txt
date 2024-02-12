@@ -1,0 +1,22 @@
+/*
+ * TCSS 305 – Winter 2015
+ * Assignment 3 - Easy Street
+ */
+package tools;
+
+import java.awt.geom.Ellipse2D;
+
+/**
+ * Represents an EllipseTool class.
+ * @author Lola Howell
+ * @version February 25, 2015
+ */
+public class EllipseTool extends AbstractRectangularShape {
+
+    /**
+     * Constructor for 2D ellipse tool.
+     */
+    public EllipseTool() {
+        super(new Ellipse2D.Double());
+    }
+}

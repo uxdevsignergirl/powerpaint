@@ -1,0 +1,42 @@
+/*
+ * TCSS 305 – Winter 2015
+ * Assignment 5 - Power Paint
+ */
+package tools;
+
+import java.awt.Shape;
+
+/**
+ * Represents a ToolInterface class.
+ * @author Lola Howell
+ * @version February 25, 2015
+ */
+public interface ToolInterface {
+    /**
+     * Starts creating the shape for the Sketch made by this tool.
+     * 
+     * @param theX the x coordinate.
+     * @param theY the y coordinate.
+     * 
+     * @return the shape created.
+     */
+    Shape start(final int theX, final int theY);
+
+    /**
+     * Changes the shape for the Sketch made by this tool.
+     * 
+     * @param theX the x coordinate.
+     * @param theY the y coordinate.
+     * 
+     * @return the shape created.
+     */
+    Shape move(final int theX, final int theY);
+
+    /**
+     * Returns the name of this tool.
+     *
+     * @return the name of this tool.
+     */
+    String getName();
+}
+

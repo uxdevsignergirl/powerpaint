@@ -1,0 +1,41 @@
+/*
+ * TCSS 305 – Winter 2015
+ * Assignment 3 - Easy Street
+ */
+
+package tools;
+
+import java.awt.Shape;
+import java.awt.geom.GeneralPath;
+
+/**
+ * Represents a PencilTool class.
+ * @author Lola Howell
+ * @version February 25, 2015
+ */
+public class PencilTool extends AbstractTool {
+
+    /**
+     * The GeneralPath.
+     */
+    private GeneralPath myPath;
+
+    /* 
+     * @see tools.ToolInterface#start(int, int)
+     */
+    @Override
+    public Shape start(final int theX, final int theY) {
+        myPath = new GeneralPath();
+        myPath.moveTo(theX, theY);
+        return myPath;
+    }
+
+    /* 
+     * @see tools.ToolInterface#move(int, int)
+     */
+    @Override
+    public Shape move(final int theX, final int theY) {
+        myPath.lineTo(theX, theY);
+        return myPath;
+    }
+}

@@ -1,0 +1,64 @@
+/*
+ * TCSS 305 – Winter 2015
+ * Assignment 5 - Power Paint
+ */
+
+package actions;
+
+import gui.ColorIcon;
+import gui.SketchPad;
+
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JColorChooser;
+
+/**
+ * Represents a ColorAction class.
+ * @author Lola Howell
+ * @version February 25, 2015
+ */
+
+@SuppressWarnings("serial")
+public class ColorAction extends AbstractAction {  
+
+    /**
+     * The SketchPad to associate with this Action..
+     */
+    private final SketchPad myPad;
+
+    /**
+     * The color.
+     */
+    private Color myColor;
+
+    /**
+     * Constructs an action with the specified name and icon.
+     * @param thePad the SketchPad to associate with this Action.
+     */
+    public ColorAction(final SketchPad thePad) {
+        super("Color...", new ColorIcon(Color.BLACK));
+        putValue(Action.MNEMONIC_KEY, KeyEvent.VK_C);
+        myPad = thePad;
+        myColor  = Color.BLACK;
+    }
+
+    /** 
+     * Sets the color of the icon to chosen color as well
+     * as sets the color for the SketchPad to chosen color. 
+     * 
+     * @param theEvent the event, ignored.
+     */
+    @Override
+    public void actionPerformed(final ActionEvent theEvent) {
+        final Color colorChoice = JColorChooser.showDialog(myPad, "Select a Color", myColor);
+        if (colorChoice != null) {
+            putValue(Action.SMALL_ICON, new ColorIcon(colorChoice));
+            myPad.setColor(colorChoice);
+            myColor = colorChoice;
+        }
+    }
+}

@@ -1,0 +1,75 @@
+/*
+ * TCSS 305 – Winter 2015
+ * Assignment 5 - Power Paint
+ */
+
+package gui;
+
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Shape;
+import java.awt.Stroke;
+
+/**
+ * Represents a ColorIcon class.
+ * @author Lola Howell
+ * @version February 25, 2015
+ */
+public class Sketch {
+
+    /**
+     * The shape.
+     */
+    private final Shape myShape;
+
+    /**
+     * The color of the shape.
+     */
+    private final Color myColor;
+
+    /**
+     * The stroke width of the line.
+     */
+    private final Stroke myStrokeWidth;
+
+    /**
+     * Constructor to create a Sketch.
+     * 
+     * @param theShape the Shape of the Sketch.
+     * @param theColor the Color of the Sketch.
+     * @param theStrokeWidth the Stroke width of the line.
+     */
+    public Sketch(final Shape theShape, final Color theColor, final float theStrokeWidth) {
+        myShape = theShape;
+        myColor = theColor;
+        myStrokeWidth = new BasicStroke(theStrokeWidth);
+    }
+
+    /**
+     * Returns the Shape of the Sketch.
+     * 
+     * @return the Shape.
+     */
+    public Shape getShape() {
+        return myShape;
+    }
+
+    /**
+     * Returns the Color of the Sketch.
+     * 
+     * @return the Color.
+     */
+    public Color getColor() {
+        return myColor;
+    }
+
+    /**
+     * Returns the Stroke width of the line.
+     * 
+     * @return the Stroke width of the line.
+     */
+    public Stroke getStrokeWidth() {
+        return myStrokeWidth;
+    }  
+}
+

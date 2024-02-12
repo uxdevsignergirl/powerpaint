@@ -1,0 +1,71 @@
+/*
+ * TCSS 305 – Winter 2015
+ * Assignment 5 - Power Paint
+ */
+
+package actions;
+import gui.SketchPad;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+
+import tools.AbstractTool;
+import tools.ToolInterface;
+
+/**
+ * Represents a ToolActions class.
+ * @author Lola Howell
+ * @version February 25, 2015
+ */
+
+@SuppressWarnings("serial")
+public class ToolActions extends AbstractAction {
+
+    /**
+     * The default tool.
+     */
+    private static final String MY_DEFAULT_TOOL = "Pencil";
+
+    /**
+     * The SketchPad to associate with this Action..
+     */
+    private final SketchPad mySketchPad;
+
+    /**
+     * The specific Tool for which action will be created.
+     */
+    private final ToolInterface myTool;
+
+    /**
+     * Constructs the actions for different tools.
+     *
+     * @param thePad the SkethcPad this tool will draw on.
+     * @param theTool the tool to associate with this action.
+     */
+    public ToolActions(final SketchPad thePad, final AbstractTool theTool) {
+        super(theTool.getName());
+        putValue(Action.MNEMONIC_KEY,
+                 KeyEvent.getExtendedKeyCodeForChar(theTool.getName().charAt(0)));
+        mySketchPad = thePad;
+        myTool = theTool;
+        if (theTool.getName().equals(MY_DEFAULT_TOOL)) {
+            putValue(Action.SELECTED_KEY, true);
+            mySketchPad.setTool(myTool);
+        }
+    }
+
+    /** 
+     * Sets tool for the SketchPad to specific tool.
+     * 
+     *  @param theEvent the event, ignored.
+     */
+    @Override
+    public void actionPerformed(final ActionEvent theEvent) {
+        putValue(Action.SELECTED_KEY, true);
+        mySketchPad.setTool(myTool);
+    }
+}
+    

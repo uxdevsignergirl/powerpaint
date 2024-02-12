@@ -1,0 +1,23 @@
+/*
+ * TCSS 305 – Winter 2015
+ * Assignment 3 - Easy Street
+ */
+
+package tools;
+
+import java.awt.geom.Rectangle2D;
+
+/**
+ * Represents a RectangleTool class.
+ * @author Lola Howell
+ * @version February 25, 2015
+ */
+public class RectangleTool extends AbstractRectangularShape {
+
+    /**
+     * Constructor for 2D rectangle tool.
+     */
+    public RectangleTool() {
+        super(new Rectangle2D.Double());
+    }
+}

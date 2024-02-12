@@ -1,0 +1,233 @@
+/*
+ * TCSS 305 – Winter 2015
+ * Assignment 5 - Power Paint
+ */
+
+package gui;
+
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
+
+import tools.EllipseTool;
+import tools.LineTool;
+import tools.PencilTool;
+import tools.RectangleTool;
+
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JSlider;
+import javax.swing.JToggleButton;
+import javax.swing.JToolBar;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
+import actions.ColorAction;
+import actions.ToolActions;
+
+/**
+ * Represents an PowerPaintGUI class.
+ * @author Lola Howell
+ * @version February 13, 2015
+ */
+
+@SuppressWarnings("serial")
+public class PowerPaintGUI extends JFrame {
+    
+    /**
+     * The JMenuBar object.
+     */
+    private JMenuBar myMenuBar;
+
+    /**
+     * The SketchPad object.
+     */
+    private final SketchPad mySketchPad;
+
+    /**
+     * The collection of the ToolActions.
+     */
+    private List<ToolActions> myToolActions;
+
+    /**
+     * The ColorAction.
+     */
+    private ColorAction myColorAction;
+
+    /**
+     * Constructor for PowerPaintGUI object,
+     * initializes the fields.
+     */
+    public PowerPaintGUI() {
+        super("TCSS 305 PowerPaint");
+        myMenuBar = new JMenuBar();
+        mySketchPad = new SketchPad();
+        myColorAction = new ColorAction(mySketchPad);
+        myToolActions = new ArrayList<ToolActions>();
+    }
+
+    /**
+     * Sets the title and the icon of the frame, attempts to 
+     * center the frame on the screen, sets the JMenuBar, calls
+     * other methods for creation of menus, adds ToolBar and 
+     * SketchPad to the frame. Displays the GUI.
+     */
+    public void start() {
+        setIconImage(new ImageIcon("icons/w.gif").getImage());
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        createActions();
+        setJMenuBar(myMenuBar);
+        createFileMenu();
+        createOptionsMenu();
+        createToolsMenu();
+        createHelpMenu();
+        add(createToolBar(), BorderLayout.SOUTH);
+        add(mySketchPad, BorderLayout.CENTER);
+        pack();
+        setVisible(true);
+    } 
+
+    /**
+     * Creates the Actions for each tool and adds them to 
+     * the list.
+     */
+    private void createActions() {
+        myToolActions.add(new ToolActions(mySketchPad, new PencilTool()));
+        myToolActions.add(new ToolActions(mySketchPad, new LineTool()));
+        myToolActions.add(new ToolActions(mySketchPad, new RectangleTool()));
+        myToolActions.add(new ToolActions(mySketchPad, new EllipseTool()));
+    }
+
+    /**
+     * Creates File Menu with File, Clear and Exit as
+     * well as their mnemonics.
+     */
+    private void createFileMenu() {
+        final JMenu fileMenu = new JMenu("File"); // created file menu object
+        fileMenu.setMnemonic(KeyEvent.VK_F);
+        myMenuBar.add(fileMenu); //added file menu to the menu bar
+        final JMenuItem clearItem = new JMenuItem("Clear", KeyEvent.VK_C);
+        clearItem.addActionListener(new ActionListener() {
+            public void actionPerformed(final ActionEvent theEvent) {
+                mySketchPad.clearSketches();
+            }
+        });
+        fileMenu.add(clearItem); //added item(sub menu) to file menu object
+        fileMenu.addSeparator(); //added separator
+        final JMenuItem quitMenu = new JMenuItem("Exit", KeyEvent.VK_X);
+        quitMenu.addActionListener(new ActionListener() {
+            public void actionPerformed(final ActionEvent theEvent) {
+                dispose();
+            }
+        });
+        fileMenu.add(quitMenu);
+    }
+
+    /**
+     * Creates Options Menu with Grid and Thickness slider
+     * as well as their mnemonics.
+     */
+    private void createOptionsMenu() {
+        final JMenu optionsMenu = new JMenu("Options");
+        optionsMenu.setMnemonic(KeyEvent.VK_O);
+        myMenuBar.add(optionsMenu);
+        final JCheckBoxMenuItem gridCheckbox = new JCheckBoxMenuItem("Grid");
+        gridCheckbox.setMnemonic(KeyEvent.VK_G);
+        gridCheckbox.addActionListener(new ActionListener() {
+            public void actionPerformed(final ActionEvent theEvent) {
+                mySketchPad.toggleGrid(gridCheckbox.getState());
+            }
+        });
+        optionsMenu.add(gridCheckbox);
+        final JMenu thicknessMenu = new JMenu("Thickness");
+        thicknessMenu.setMnemonic(KeyEvent.VK_T);
+        optionsMenu.add(thicknessMenu);
+        final JSlider slider = new JSlider(0, 20, 5);
+        slider.setPaintTicks(true);
+        slider.setPaintLabels(true);
+        slider.setMajorTickSpacing(5);
+        slider.setMinorTickSpacing(1);
+        slider.addChangeListener(new ChangeListener() {
+            public void stateChanged(final ChangeEvent theEvent) {
+                final int value = slider.getValue();
+                if (value > 0) {
+                    mySketchPad.setThickness(value);
+                }
+            }
+        });
+        thicknessMenu.add(slider);
+    }
+
+    /**
+     * Sets up Tools Menu with Color Chooser, 
+     * as well as tool radio buttons: Pencil, Line,
+     * Rectangle, Ellipse and their mnemonics.
+     */
+    private void createToolsMenu() {
+        final JMenu toolsMenu = new JMenu("Tools");
+        toolsMenu.setMnemonic(KeyEvent.VK_T);
+        myMenuBar.add(toolsMenu);
+        final JMenuItem colorItem = new JMenuItem(myColorAction);
+        toolsMenu.add(colorItem);
+        toolsMenu.addSeparator();
+        final ButtonGroup group = new ButtonGroup();
+        for (final ToolActions ta : myToolActions) {
+            final JRadioButtonMenuItem rb = new JRadioButtonMenuItem(ta);
+            toolsMenu.add(rb);
+            group.add(rb);
+        }
+    }
+
+    /**
+     * Sets up the HelpMenu displays About message dialog
+     * with information.
+     */
+    private void createHelpMenu() {
+        final JMenu helpMenu = new JMenu("Help");
+        helpMenu.setMnemonic(KeyEvent.VK_H);
+        myMenuBar.add(helpMenu);
+        final JMenuItem about = new JMenuItem("About...", KeyEvent.VK_A);
+        about.addActionListener(new ActionListener() {
+            public void actionPerformed(final ActionEvent theEvent) {
+                JOptionPane.showMessageDialog(null, "TCSS 305 PowerPaint\nWinter 2015\n"
+                                                + "Author: Lola Howell",
+                                                "About",
+                                                JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+        helpMenu.add(about);
+    }
+
+    /**
+     * Sets up and returns theJToolBar with Buttons and
+     * mnemonics.
+     * 
+     * @return the Tool Bar.
+     */
+    private JToolBar createToolBar() {
+        final JToolBar toolBar = new JToolBar();
+        final JButton color = new JButton(myColorAction);
+        color.setMnemonic(KeyEvent.VK_C);
+        toolBar.add(color);
+        toolBar.addSeparator();
+        final ButtonGroup group = new ButtonGroup();
+        for (final ToolActions ta : myToolActions) {
+            final JToggleButton tb = new JToggleButton(ta);
+            toolBar.add(tb);
+            group.add(tb);
+        }
+        return toolBar;
+    }
+}

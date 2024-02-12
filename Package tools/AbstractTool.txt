@@ -1,0 +1,54 @@
+/*
+ * TCSS 305 – Winter 2015
+ * Assignment 5 - Power Paint
+ */
+package tools;
+
+import java.awt.Shape;
+
+/**
+ * Represents a AbstractTool class.
+ * @author Lola Howell
+ * @version February 25, 2015
+ */
+public abstract class AbstractTool implements ToolInterface {
+    /**
+     * The string to remove from the class name.
+     */
+    private static final String TOOL = "Tool";
+    
+    /**
+     * The name of the tool.
+     */
+    private final String myName;
+    
+    /**
+     * Constructor for tool object.
+     */
+    public AbstractTool() {
+        final String name = getClass().getName();
+        final int index = name.lastIndexOf('.');
+        myName = name.substring(index + 1, name.length() - TOOL.length());   
+    }
+    
+    /* 
+     * @see tools.ToolInterface#start(int, int)
+     */
+    @Override
+    public abstract Shape start(final int theX, final int theY);
+
+    /* 
+     * @see tools.ToolInterface#move(int, int)
+     */
+    @Override
+    public abstract Shape move(final int theX, final int theY);
+    
+    /* 
+     * @see tools.ToolInterface#String()
+     */
+    @Override
+    public final String getName() {
+        return myName;
+    }
+}
+
